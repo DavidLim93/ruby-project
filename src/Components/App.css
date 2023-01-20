@@ -1,5 +1,8 @@
 body {
-  background-color: #4682B4;
+  background: #0f0c29;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -27,7 +30,7 @@ body {
   font-size: 60px;
   text-align: center;
   position: relative;
-  color: yellow;
+  color: #CCCCFF;
 }
 
 .container {
@@ -48,4 +51,26 @@ body {
     color: black;
     text-align: center;
     justify-content: center;
+    padding: 10px;
+}
+
+.h4 {
+  margin: 0;
+}
+
+.button {
+  margin-top: 10px;
+}
+.addTask {
+  margin: 10px;
+  text-align: center;
+  justify-content: center;
+}
+
+.form {
+  margin: 2px;
+}
+
+.h2 {
+  color: aqua;
 }

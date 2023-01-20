@@ -1,37 +1,69 @@
 import React, {useEffect, useState} from "react";
-// import TasksList from "./TasksList";
 import Tasks from "./Tasks"
+import TaskForm from "./TaskForm";
 
 function TaskContainer() {
 
-    const [task, setTask] = useState([]);
+    const [todo, setTodo] = useState([]);
+    const [editMode, setEditMode]= useState(null)
+    const [todoDetails, setTodoDetails] = useState(null)
 
     useEffect(() => {
         fetch("http://localhost:9292")
         .then((r) => r.json())
         .then((task)=> {
             console.log(task)
-            setTask(task)
+            setTodo(task)
         })
     }, [])
 
-    // const displayTask = task.filter((tasks) => {
-    //     return tasks.task
-    //     .toLowerCase()
-    //     .trim()
-    //     .replace(/[^a-zA-Z0-9 ]/g)
-    // })
-const displayTask = task.map((task) => {
+const displayTask = todo.map((todo) => {
     return <Tasks
-    task={task.task}
-    importance={task.importance}
-    complete_by={task.complete_by}
+    key={todo.id}
+    todo={todo.todo}
+    importance={todo.importance}
+    complete_by={todo.complete_by}
      />
 })
 
+function handleDeleteTask(deletedTask) {
+    const updatedTasks = todo.filter((todo) => todo.id !== deletedTask.id);
+    setTodo(updatedTasks)
+}
+
+function handleSetTodoDetails() {
+    setTodoDetails(todo)
+    setEditMode(false)
+}
+
+function handleUpdateTask(updatedTodo) {
+    const updatedTodos = todo.map((todo) => {
+        if (todo.id === updatedTodo.id) {
+            return updatedTodo
+        } else {
+            return todo
+        }
+    });
+    setTodo(updatedTodos)
+    fetch(`http://localhost:9292/todos/${todo.id}`, {
+        method: "PATCH",
+ })
+ .then((r) => r.json())
+ .then((updatedTodo) => updatedTodos(updatedTodo))
+}
+
     return (
         <div className="container">
-        <Tasks task={displayTask} />
+            <TaskForm />
+
+        <Tasks 
+        todo = {displayTask}
+        onDeleteTask = {handleDeleteTask}
+        onUpdateTask = {handleUpdateTask}
+        todoDetails={todoDetails}
+        editMode={editMode}
+        handleSetTodoDetails={handleSetTodoDetails}
+        />
         </div>
     )
 }

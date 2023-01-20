@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import Tasks from "./Tasks"
 
-function TaskForm({setTask}) {
+function TaskForm({setTodo}) {
 
-   const [tasks, setTasks] = useState("");
+   const [task, setTask] = useState("");
    const [importance, setImportance] = useState("");
    const [complete_by, setComplete_by] = useState("")
 
@@ -12,19 +12,22 @@ function TaskForm({setTask}) {
        e.preventDefault();
 
        const addTasks = {
-           "tasks": tasks,
+           "tasks": task,
            "importance": importance,
            "complete_by": complete_by
        };
 
-       fetch("http://localhost:9292", {
+       fetch("http://localhost:9292/todos", {
            method: "POST",
            headers: {
                "Content-Type": "application/json",
              },
              body: JSON.stringify(addTasks)})
              .then((r) => r.json())
-             .then((newTask) => setTask([...Tasks, newTask])) 
+             .then((newTask) => 
+            //  console.log(...Tasks, newTask)
+             setTodo([...Tasks, newTask])
+                ) 
        }
 
 
@@ -36,8 +39,8 @@ function TaskForm({setTask}) {
          type="text"
          className="form"
          placeholder="Task"
-         value={tasks}
-         onChange={(e) => setTasks(e.target.value)}
+         value={task}
+         onChange={(e) => setTask(e.target.value)}
        />
         <input
          type="text"
@@ -53,7 +56,7 @@ function TaskForm({setTask}) {
          value={complete_by}
          onChange={(e) => setComplete_by(e.target.value)}
        />
-       <button type="submit" onSubmit={handleSubmit}>Add Task</button>
+       <button type="submit" onSubmit={handleSubmit} className="button">Add Task</button>
         </form>
    </div>
    )
