@@ -74,3 +74,11 @@ background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+
 .h2 {
   color: aqua;
 }
+
+
+.checkbox-wrapper{
+  display: flex;
+  /* flex-direction: row; */
+  align-items: center;
+  justify-content: center;
+}
