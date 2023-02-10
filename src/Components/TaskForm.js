@@ -1,7 +1,8 @@
 import React, {useState} from "react";
-// import Task from "./Task";
+import Task from "./Task";
 
-function TaskForm({setTask, onAddTask}) {
+
+function TaskForm({setTasks, onAddTask}) {
 
     
     const [taskName, setTaskName] = useState("");
@@ -35,12 +36,12 @@ function TaskForm({setTask, onAddTask}) {
               .then((newTask) => 
             //   console.log(...Task, newTask)
             // console.log(newTask),
-            setTask(onAddTask(newTask)),
-            setTaskName(""),
-            setTaskDescription(""),
-            setTaskPriority(""),
-            setTaskDeadline("")
+            setTasks(onAddTask(newTask))
         )}
+
+        function handleAddTask(newTask) {
+            setTasks(...Task, newTask)
+        }
 
     return (
         <div className="addTask">
@@ -74,7 +75,12 @@ function TaskForm({setTask, onAddTask}) {
                 value={taskDeadline}
                 onChange={(e) => setTaskDeadline(e.target.value)}
             />
-            <button type="submit" onSubmit={handleSubmit} className="button">Add Task</button>
+            <button 
+            type="submit" 
+            className="button"
+            onSubmit={handleSubmit} 
+            onUpdateTask={handleAddTask}
+            >Add Task</button>
                 </form>
         </div>
             )
